@@ -1,7 +1,9 @@
 package com.github.kongchen.swagger.docgen.mavenplugin;
 
-import com.github.kongchen.swagger.docgen.AbstractDocumentSource;
-import com.github.kongchen.swagger.docgen.GenerateException;
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map.Entry;
 
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
@@ -14,8 +16,8 @@ import org.apache.maven.plugins.annotations.ResolutionScope;
 import org.apache.maven.project.MavenProject;
 import org.apache.maven.project.MavenProjectHelper;
 
-import java.io.File;
-import java.util.List;
+import com.github.kongchen.swagger.docgen.AbstractDocumentSource;
+import com.github.kongchen.swagger.docgen.GenerateException;
 
 /**
  * User: kongchen
@@ -31,8 +33,11 @@ public class ApiDocumentMojo extends AbstractMojo {
      */
     @Parameter
     private List<ApiSource> apiSources;
+    
+    @Parameter
+    private AdditionalDependency additionalDependency;
 
-
+    
     @Parameter(defaultValue = "${project}", readonly = true)
     private MavenProject project;
 
@@ -49,8 +54,13 @@ public class ApiDocumentMojo extends AbstractMojo {
     
     @Parameter(property="file.encoding")
     private String encoding;
+    
 
-    public List<ApiSource> getApiSources() {
+	public AdditionalDependency getAdditionalDependency() {
+		return additionalDependency;
+	}
+
+	public List<ApiSource> getApiSources() {
         return apiSources;
     }
 
@@ -58,7 +68,7 @@ public class ApiDocumentMojo extends AbstractMojo {
         this.apiSources = apiSources;
     }
 
-    @Override
+	@Override
     public void execute() throws MojoExecutionException, MojoFailureException {
         if(project !=null) {
             projectEncoding = project.getProperties().getProperty("project.build.sourceEncoding");
@@ -89,7 +99,16 @@ public class ApiDocumentMojo extends AbstractMojo {
                 AbstractDocumentSource documentSource = apiSource.isSpringmvc()
                         ? new SpringMavenDocumentSource(apiSource, getLog(), projectEncoding)
                         : new MavenDocumentSource(apiSource, getLog(), projectEncoding);
-
+                if(project!= null && project.getProperties() != null && project.getProperties().entrySet().size() > 0) {
+                	getLog().info("============RUN HERE=============" + additionalDependency.getAdditionalClassPath() + "======"+additionalDependency.getIncludeJarsOnFolder());
+                 Iterator<Entry<Object, Object>> iterator = project.getProperties().entrySet().iterator();
+                 while(iterator.hasNext()) {
+                	 Entry<Object, Object> next = iterator.next();
+                	 getLog().info("PropName:" + next.getKey() + " --Value:" + next.getValue());
+                 }
+                 getLog().info("[ADDClasspath] " + additionalDependency.getAdditionalClassPath());
+                 getLog().info("============END=============");
+                }
                 documentSource.loadTypesToSkip();
                 documentSource.loadModelModifier();
                 documentSource.loadModelConverters();
