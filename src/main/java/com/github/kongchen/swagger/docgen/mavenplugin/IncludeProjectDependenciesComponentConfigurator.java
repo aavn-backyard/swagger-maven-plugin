@@ -77,7 +77,7 @@ public class IncludeProjectDependenciesComponentConfigurator extends AbstractCom
     	String additionalJarsFolder = additionalDependency.getIncludeJarsOnFolder();
     	List<String> compileClasspathElements = new ArrayList<String>();
     	if(StringUtils.isNotEmpty(additionalClassPath)) {
-    		compileClasspathElements = Arrays.asList(StringUtils.split(additionalDependency.getAdditionalClassPath(), ","));
+    		compileClasspathElements.addAll(Arrays.asList(StringUtils.split(additionalDependency.getAdditionalClassPath(), ",")));
     	}
     	
     	if(StringUtils.isNotEmpty(additionalJarsFolder)) {
@@ -86,7 +86,7 @@ public class IncludeProjectDependenciesComponentConfigurator extends AbstractCom
     			File[] listOfFiles = folder.listFiles();
     			for (int i = 0; i < listOfFiles.length; i++) {
     				System.out.println("File/Folder:" + listOfFiles[i].getAbsolutePath());
-    			    if (listOfFiles[i].isFile() && !listOfFiles[i].getAbsolutePath().endsWith("jar")) {
+    			    if (listOfFiles[i].isFile() && listOfFiles[i].getAbsolutePath().endsWith("jar")) {
     			    	compileClasspathElements.add(listOfFiles[i].getAbsolutePath());
     			     } 
     			}
