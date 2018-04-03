@@ -7,7 +7,7 @@ public class AdditionalDependency {
 	private String additionalClassPath;
 	
 	@Parameter
-	private String includeJarsOnFolder;
+	private IncludeJarsOnFolder includeJarsOnFolder;
 	
 	public String getAdditionalClassPath() {
 		return additionalClassPath;
@@ -15,11 +15,12 @@ public class AdditionalDependency {
 	public void setAdditionalClassPath(String additionalClassPath) {
 		this.additionalClassPath = additionalClassPath;
 	}
-	public String getIncludeJarsOnFolder() {
+	public IncludeJarsOnFolder getIncludeJarsOnFolder() {
 		return includeJarsOnFolder;
 	}
-	public void setIncludeJarsOnFolder(String includeJarsOnFolder) {
+	public void setIncludeJarsOnFolder(IncludeJarsOnFolder includeJarsOnFolder) {
 		this.includeJarsOnFolder = includeJarsOnFolder;
 	}
+
 	
 }

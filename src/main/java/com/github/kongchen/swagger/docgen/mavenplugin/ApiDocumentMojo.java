@@ -99,16 +99,7 @@ public class ApiDocumentMojo extends AbstractMojo {
                 AbstractDocumentSource documentSource = apiSource.isSpringmvc()
                         ? new SpringMavenDocumentSource(apiSource, getLog(), projectEncoding)
                         : new MavenDocumentSource(apiSource, getLog(), projectEncoding);
-                if(project!= null && project.getProperties() != null && project.getProperties().entrySet().size() > 0) {
-                	getLog().info("============RUN HERE=============" + additionalDependency.getAdditionalClassPath() + "======"+additionalDependency.getIncludeJarsOnFolder());
-                 Iterator<Entry<Object, Object>> iterator = project.getProperties().entrySet().iterator();
-                 while(iterator.hasNext()) {
-                	 Entry<Object, Object> next = iterator.next();
-                	 getLog().info("PropName:" + next.getKey() + " --Value:" + next.getValue());
-                 }
-                 getLog().info("[ADDClasspath] " + additionalDependency.getAdditionalClassPath());
-                 getLog().info("============END=============");
-                }
+
                 documentSource.loadTypesToSkip();
                 documentSource.loadModelModifier();
                 documentSource.loadModelConverters();
