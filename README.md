@@ -31,7 +31,7 @@ In here i added new configuration to load additional classpath from external sou
 </build>
 ```
 # Configuration for `additionalDependency`
-This coifiguration could helpful in case your project depend on some de
+This configuration could helpful in case your project depend on some external librabries and you want to load it
 
 | **name** | **description** |
 |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
