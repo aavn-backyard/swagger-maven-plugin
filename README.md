@@ -32,6 +32,7 @@ In here i added new configuration to load additional classpath from external sou
 ```
 # Configuration for `additionalDependency`
 This coifiguration could helpful in case your project depend on some de
+
 | **name** | **description** |
 |------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `additionalClassPath` | Additional classpath that you want this plugin to load more before it scan Restful API |
